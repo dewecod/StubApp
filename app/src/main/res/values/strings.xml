@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">StubApp</string>
+    <string name="query">""{\"$query\":{\"$and\":[{\"categoryUri\":\"dmoz/Sports/Football\"},{\"lang\":\"eng\"}]},\"$filter\":{\"forceMaxDataTimeWindow\":\"31\"}}""</string>
+    <string name="article_list">Sport news</string>
+</resources>
