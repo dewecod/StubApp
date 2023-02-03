@@ -1,12 +1,15 @@
 package com.clearylabs.stubapp.model
 
+import android.os.Parcelable
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import kotlinx.parcelize.Parcelize
 
 @JsonClass(generateAdapter = true)
+@Parcelize
 data class Article(
-    @Json(name = "source") val source: Source,
-    @Json(name = "authors") val authors: List<Author>,
+     @Json(name = "source") val source: Source,
+     @Json(name = "authors") val authors: List<Author>,
     @Json(name = "body") val body: String? = null,
     @Json(name = "dataType") val dataType: String? = null,
     @Json(name = "date") val date: String? = null,
@@ -24,4 +27,4 @@ data class Article(
     @Json(name = "uri") val uri: String? = null,
     @Json(name = "url") val url: String? = null,
     @Json(name = "wgt") val wgt: Int? = 0,
-)
+) : Parcelable

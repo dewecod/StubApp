@@ -36,6 +36,7 @@ class MainActivity : BaseActivity(), BaseFragment.FragmentNavigation,
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        initFragNav(savedInstanceState)
         val apiConfig = Config(
             apiKey = API_KEY,
             resultType = API_RESULT_TYPE,
@@ -118,10 +119,9 @@ class MainActivity : BaseActivity(), BaseFragment.FragmentNavigation,
         }
     }
 
-    override fun navigateTo(fragment: Fragment) =
-        fragNavController.pushFragment(fragment, FragNavTransactionOptions.newBuilder().build())
+    override fun navigateTo(fragment: Fragment) = fragNavController.pushFragment(fragment, FragNavTransactionOptions.newBuilder().build())
 
-    override val numberOfRootFragments: Int = 5
+    override val numberOfRootFragments: Int = 1
 
     override fun getRootFragment(index: Int): Fragment {
         when (index) {

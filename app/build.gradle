@@ -18,7 +18,7 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
-        buildConfigField("String", "MAIN_URL", "\"http://eventregistry.org\"")
+        buildConfigField("String", "MAIN_URL", "\"https://eventregistry.org\"")
         buildConfigField("String", "HOST", "\"eventregistry.org\"")
     }
 

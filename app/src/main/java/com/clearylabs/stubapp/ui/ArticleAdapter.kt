@@ -5,12 +5,14 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.clearylabs.stubapp.databinding.ItemArticleBinding
 import com.clearylabs.stubapp.model.Article
 
 class ArticleAdapter : RecyclerView.Adapter<ArticleAdapter.HomeViewHolder>() {
     private val mDiffer: AsyncListDiffer<Article> = AsyncListDiffer(this, DiffUtilCallback)
 
+    var onItemClick: ((Article) -> Unit)? = null
     private var mList: MutableList<Article> = mutableListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ArticleAdapter.HomeViewHolder {
@@ -24,7 +26,14 @@ class ArticleAdapter : RecyclerView.Adapter<ArticleAdapter.HomeViewHolder>() {
     inner class HomeViewHolder(private val binding: ItemArticleBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(article: Article) {
             if (mDiffer.currentList.isNotEmpty()) {
+                val activity: MainActivity = binding.root.context as MainActivity
+                binding.root.setOnClickListener { onItemClick?.invoke(article) }
+
                 binding.textTitle.text = article.title
+
+                Glide.with(activity)
+                    .load(article.image)
+                    .into(binding.imageArticle)
             }
         }
     }

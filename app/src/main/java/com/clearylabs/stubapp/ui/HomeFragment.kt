@@ -46,6 +46,14 @@ class HomeFragment : BaseFragment() {
         binding.recyclerArticle.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         binding.recyclerArticle.setHasFixedSize(true)
         binding.recyclerArticle.setItemViewCacheSize(PER_PAGE)
+
+        adapter.onItemClick = { article ->
+            val bundle = Bundle()
+            bundle.putParcelable("article", article)
+            val detailFragment = DetailFragment()
+            detailFragment.arguments = bundle
+            mFragmentNavigation.navigateTo(detailFragment)
+        }
     }
 
     private fun observe() {
