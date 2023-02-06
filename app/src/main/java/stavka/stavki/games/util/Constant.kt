@@ -27,7 +27,7 @@ class Constant {
 
         // Shared preferences
         const val APP_PREFERENCES: String = "stavka.stavki.games.APP_PREFERENCES"
-        const val PREF_USER_ID = "stavka.stavki.games.userId"
+        const val PREF_URL = "stavka.stavki.games.url"
 
         val apiDateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
         val apiDayFormat = SimpleDateFormat("dd", Locale.ENGLISH)

@@ -1,14 +1,14 @@
 package stavka.stavki.games.util
 
 import android.content.SharedPreferences
-import stavka.stavki.games.util.Constant.Companion.PREF_USER_ID
+import stavka.stavki.games.util.Constant.Companion.PREF_URL
 
 class PreferenceManager constructor(private val sharedPreferences: SharedPreferences) {
 
-    var prefUserId: Int
-        get() = sharedPreferences.getInt(PREF_USER_ID, 0)
+    var prefUrl: String
+        get() = sharedPreferences.getString(PREF_URL, "").toString()
         set(value) {
-            sharedPreferences.edit().putInt(PREF_USER_ID, value).apply()
+            sharedPreferences.edit().putString(PREF_URL, value).apply()
         }
 
     fun remove(key: String?) {
@@ -16,6 +16,6 @@ class PreferenceManager constructor(private val sharedPreferences: SharedPrefere
     }
 
     fun clear() {
-        sharedPreferences.edit().remove(PREF_USER_ID).apply()
+        sharedPreferences.edit().remove(PREF_URL).apply()
     }
 }

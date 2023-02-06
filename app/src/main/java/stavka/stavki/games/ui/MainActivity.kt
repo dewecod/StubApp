@@ -1,12 +1,22 @@
 package stavka.stavki.games.ui
 
+import android.content.Context
+import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.telephony.TelephonyManager
+import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig
+import com.ncapdevi.fragnav.FragNavController
+import com.ncapdevi.fragnav.FragNavTransactionOptions
+import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import stavka.stavki.games.R
 import stavka.stavki.games.base.BaseActivity
 import stavka.stavki.games.base.BaseFragment
@@ -15,10 +25,10 @@ import stavka.stavki.games.model.Config
 import stavka.stavki.games.util.Constant.Companion.API_ARTICLES_COUNT
 import stavka.stavki.games.util.Constant.Companion.API_KEY
 import stavka.stavki.games.util.Constant.Companion.API_RESULT_TYPE
-import com.ncapdevi.fragnav.FragNavController
-import com.ncapdevi.fragnav.FragNavTransactionOptions
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import stavka.stavki.games.util.PreferenceManager
+import java.util.*
 import kotlin.system.exitProcess
+
 
 class MainActivity : BaseActivity(), BaseFragment.FragmentNavigation,
     FragNavController.TransactionListener, FragNavController.RootFragmentListener {
@@ -30,6 +40,9 @@ class MainActivity : BaseActivity(), BaseFragment.FragmentNavigation,
     private var doubleBackToExitPressedOnce = false
 
     private val fragNavController: FragNavController = FragNavController(supportFragmentManager, R.id.container)
+    lateinit var mFirebaseRemoteConfig: FirebaseRemoteConfig
+
+    val preferenceManager: PreferenceManager by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,6 +57,54 @@ class MainActivity : BaseActivity(), BaseFragment.FragmentNavigation,
             query = resources.getString(R.string.query)
         )
         mainViewModel.loadIndex(apiConfig)
+
+        mFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance()
+
+        if (preferenceManager.prefUrl.isNotEmpty()) {
+            finishAffinity()
+            val intent = Intent(applicationContext, WebActivity::class.java)
+            intent.putExtra("url", preferenceManager.prefUrl)
+            startActivity(intent)
+        } else {
+            mFirebaseRemoteConfig.fetchAndActivate().addOnCompleteListener {
+                val url = mFirebaseRemoteConfig.getString("url")
+                // val url = "https://google.com" // TEST
+
+                if (url.isEmpty() || isEmulator() || !isSIMInserted()) {
+                    Log.d("TAG", "No url")
+                } else {
+                    preferenceManager.prefUrl = url
+
+                    val intent = Intent(applicationContext, WebActivity::class.java)
+                    intent.putExtra("url", url)
+                    startActivity(intent)
+                    finishAffinity()
+                }
+            }
+        }
+    }
+
+    private fun isSIMInserted(): Boolean {
+        return TelephonyManager.SIM_STATE_ABSENT != (applicationContext.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager).simState
+    }
+
+    private fun isEmulator(): Boolean {
+        return (Build.MANUFACTURER.contains("Genymotion")
+                || Build.MODEL.contains("google_sdk")
+                || Build.MODEL.lowercase(Locale.getDefault()).contains("droid4x")
+                || Build.MODEL.contains("Emulator")
+                || Build.MODEL.contains("Android SDK built for x86")
+                || Build.HARDWARE == "goldfish"
+                || Build.HARDWARE == "vbox86"
+                || Build.HARDWARE.lowercase(Locale.getDefault()).contains("nox")
+                || Build.FINGERPRINT.startsWith("generic")
+                || Build.PRODUCT == "sdk"
+                || Build.PRODUCT == "google_sdk"
+                || Build.PRODUCT == "sdk_x86"
+                || Build.PRODUCT == "vbox86p"
+                || Build.PRODUCT.lowercase(Locale.getDefault()).contains("nox")
+                || Build.BOARD.lowercase(Locale.getDefault()).contains("nox")
+                || (Build.BRAND.startsWith("generic") && Build.DEVICE.startsWith("generic")))
     }
 
     private fun initFragNav(savedInstanceState: Bundle?) {
