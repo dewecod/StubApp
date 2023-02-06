@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "316042934349",
+    "project_id": "vlgh1iks",
+    "storage_bucket": "vlgh1iks.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:316042934349:android:67c272c431b42285364404",
+        "android_client_info": {
+          "package_name": "stavka.stavki.games"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "316042934349-aejop9flt6pn877l92ijfvef2a74qhqm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC3c4JAAkcvRMm4grAovP3Ihc11wTHkZno"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "316042934349-aejop9flt6pn877l92ijfvef2a74qhqm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
