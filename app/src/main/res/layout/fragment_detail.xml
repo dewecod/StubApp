@@ -11,19 +11,6 @@
         android:id="@+id/layout_toolbar"
         layout="@layout/layout_toolbar" />
 
-    <ImageView
-        android:id="@+id/image_article"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:adjustViewBounds="true"
-        android:background="@color/white"
-        android:scaleType="fitCenter"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/layout_toolbar"
-        tools:ignore="ContentDescription"
-        tools:srcCompat="@tools:sample/avatars" />
-
     <androidx.core.widget.NestedScrollView
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -32,13 +19,26 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/image_article">
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="@dimen/spacing_normal"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="@dimen/spacing_normal">
+
+            <ImageView
+                android:id="@+id/image_article"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:background="@color/white"
+                android:scaleType="fitCenter"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/layout_toolbar"
+                tools:ignore="ContentDescription"
+                tools:srcCompat="@tools:sample/avatars" />
 
             <TextView
                 android:id="@+id/text_title"
@@ -52,9 +52,8 @@
             <WebView
                 android:id="@+id/text_body"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="@dimen/spacing_normal"
-                android:scrollbarSize="0dp" />
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_normal" />
 
         </LinearLayout>
 
