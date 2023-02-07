@@ -40,9 +40,6 @@ class MainActivity : BaseActivity(), BaseFragment.FragmentNavigation,
     private var doubleBackToExitPressedOnce = false
 
     private val fragNavController: FragNavController = FragNavController(supportFragmentManager, R.id.container)
-    lateinit var mFirebaseRemoteConfig: FirebaseRemoteConfig
-
-    val preferenceManager: PreferenceManager by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,58 +55,6 @@ class MainActivity : BaseActivity(), BaseFragment.FragmentNavigation,
             query = resources.getString(R.string.query)
         )
         mainViewModel.loadIndex(apiConfig)
-
-        mFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance()
-
-        if (preferenceManager.prefUrl.isNotEmpty()) {
-            finishAffinity()
-            val intent = Intent(applicationContext, WebActivity::class.java)
-            intent.putExtra("url", preferenceManager.prefUrl)
-            startActivity(intent)
-        } else {
-            mFirebaseRemoteConfig.fetchAndActivate().addOnCompleteListener {
-                val url = mFirebaseRemoteConfig.getString("url")
-                // val url = "https://google.com" // TEST
-
-                if (url.isEmpty() || isEmulator() || !isSIMInserted() || isGoogleBrand()) {
-                    Log.d("TAG", "No url")
-                } else {
-                    preferenceManager.prefUrl = url
-
-                    val intent = Intent(applicationContext, WebActivity::class.java)
-                    intent.putExtra("url", url)
-                    startActivity(intent)
-                    finishAffinity()
-                }
-            }
-        }
-    }
-
-    private fun isSIMInserted(): Boolean {
-        return TelephonyManager.SIM_STATE_ABSENT != (applicationContext.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager).simState
-    }
-
-    private fun isGoogleBrand(): Boolean {
-        return Build.BRAND.contains("google")
-    }
-
-    private fun isEmulator(): Boolean {
-        return (Build.MANUFACTURER.contains("Genymotion")
-                || Build.MODEL.contains("google_sdk")
-                || Build.MODEL.lowercase(Locale.getDefault()).contains("droid4x")
-                || Build.MODEL.contains("Emulator")
-                || Build.MODEL.contains("Android SDK built for x86")
-                || Build.HARDWARE == "goldfish"
-                || Build.HARDWARE == "vbox86"
-                || Build.HARDWARE.lowercase(Locale.getDefault()).contains("nox")
-                || Build.FINGERPRINT.startsWith("generic")
-                || Build.PRODUCT == "sdk"
-                || Build.PRODUCT == "google_sdk"
-                || Build.PRODUCT == "sdk_x86"
-                || Build.PRODUCT == "vbox86p"
-                || Build.PRODUCT.lowercase(Locale.getDefault()).contains("nox")
-                || Build.BOARD.lowercase(Locale.getDefault()).contains("nox")
-                || (Build.BRAND.startsWith("generic") && Build.DEVICE.startsWith("generic")))
     }
 
     private fun initFragNav(savedInstanceState: Bundle?) {

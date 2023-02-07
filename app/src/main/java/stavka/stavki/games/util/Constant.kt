@@ -17,6 +17,8 @@ class Constant {
         const val NETWORK_TIMEOUT: Long = 30
         const val MAX_MEMORY_CACHE: Long = 20 * 1024 * 1024
 
+        const val SPLASH_DELAY = 2000L
+
         // Recyclerview
         const val VIEW_TYPE_ITEM = 0
         const val VIEW_TYPE_LOADING = 1

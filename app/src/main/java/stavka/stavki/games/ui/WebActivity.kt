@@ -2,6 +2,7 @@ package stavka.stavki.games.ui
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.os.PersistableBundle
 import android.webkit.CookieManager
 import android.webkit.WebViewClient
 import androidx.appcompat.app.AppCompatActivity
@@ -43,4 +44,15 @@ class WebActivity : AppCompatActivity() {
             webSettings.javaScriptCanOpenWindowsAutomatically = true
         }
     }
+
+    override fun onSaveInstanceState(outState: Bundle, outPersistentState: PersistableBundle) {
+        super.onSaveInstanceState(outState, outPersistentState)
+        binding.web.saveState(outState)
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+        binding.web.restoreState(savedInstanceState)
+    }
+
 }
