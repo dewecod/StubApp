@@ -45,6 +45,14 @@ class WebActivity : AppCompatActivity() {
         }
     }
 
+    override fun onBackPressed() {
+        if (binding.web.canGoBack()) {
+            binding.web.goBack()
+        } else {
+            super.onBackPressed()
+        }
+    }
+
     override fun onSaveInstanceState(outState: Bundle, outPersistentState: PersistableBundle) {
         super.onSaveInstanceState(outState, outPersistentState)
         binding.web.saveState(outState)
