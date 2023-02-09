@@ -8,6 +8,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import stavka.stavki.games.databinding.ItemArticleBinding
 import stavka.stavki.games.model.Article
+import stavka.stavki.games.util.toGone
+import stavka.stavki.games.util.toVisible
 
 class ArticleAdapter : RecyclerView.Adapter<ArticleAdapter.HomeViewHolder>() {
     private val mDiffer: AsyncListDiffer<Article> = AsyncListDiffer(this, DiffUtilCallback)
@@ -31,9 +33,14 @@ class ArticleAdapter : RecyclerView.Adapter<ArticleAdapter.HomeViewHolder>() {
 
                 binding.textTitle.text = article.title
 
-                Glide.with(activity)
-                    .load(article.image)
-                    .into(binding.imageArticle)
+                if (article.image.isNullOrEmpty()) {
+                    binding.imageArticle.toGone()
+                } else {
+                    binding.imageArticle.toVisible()
+                    Glide.with(activity)
+                        .load(article.image)
+                        .into(binding.imageArticle)
+                }
             }
         }
     }

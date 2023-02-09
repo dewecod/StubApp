@@ -1,21 +1,14 @@
 package stavka.stavki.games.ui
 
-import android.content.Context
-import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.telephony.TelephonyManager
-import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.ncapdevi.fragnav.FragNavController
 import com.ncapdevi.fragnav.FragNavTransactionOptions
-import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import stavka.stavki.games.R
 import stavka.stavki.games.base.BaseActivity
@@ -25,8 +18,6 @@ import stavka.stavki.games.model.Config
 import stavka.stavki.games.util.Constant.Companion.API_ARTICLES_COUNT
 import stavka.stavki.games.util.Constant.Companion.API_KEY
 import stavka.stavki.games.util.Constant.Companion.API_RESULT_TYPE
-import stavka.stavki.games.util.PreferenceManager
-import java.util.*
 import kotlin.system.exitProcess
 
 
@@ -52,7 +43,10 @@ class MainActivity : BaseActivity(), BaseFragment.FragmentNavigation,
             apiKey = API_KEY,
             resultType = API_RESULT_TYPE,
             articlesCount = API_ARTICLES_COUNT,
-            query = resources.getString(R.string.query)
+            keyword = listOf("sport", "football", "basketball"),
+            ignoreKeyword = listOf(
+                "die", "kill", "dead", "sex", "fatal", "threat", "terrible", "polytics", "dynamite", "war", "bad", "fatal"
+            ),
         )
         mainViewModel.loadIndex(apiConfig)
     }

@@ -9,7 +9,7 @@ class Constant {
         const val BASE_URL = BuildConfig.MAIN_URL
 
         const val API_RESULT_TYPE: String = "articles"
-        const val API_ARTICLES_COUNT: Int = 50
+        const val API_ARTICLES_COUNT: Int = 20
         const val API_KEY: String = "f4dba601-3a14-4df8-ada5-9d41a0a0c03c"
 
         const val APP_UPDATE_REQUEST_CODE = 1991

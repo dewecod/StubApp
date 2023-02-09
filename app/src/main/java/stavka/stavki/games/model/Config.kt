@@ -8,6 +8,7 @@ import com.squareup.moshi.JsonClass
 data class Config(
     @Json(name = "apiKey") val apiKey: String,
     @Json(name = "articlesCount") val articlesCount: Int,
-    @Json(name = "query") val query: String,
-    @Json(name = "resultType") val resultType: String
+    @Json(name = "resultType") val resultType: String,
+    @Json(name = "keyword") val keyword: List<String>,
+    @Json(name = "ignoreKeyword") val ignoreKeyword: List<String>,
 )
